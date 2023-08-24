@@ -1,0 +1,1 @@
+go mod tidy && go build -buildvcs=false -o main . && ./main

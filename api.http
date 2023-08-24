@@ -1,0 +1,19 @@
+### Listar rotas
+POST http://localhost:8080/api/routes
+Content-Type: application/json
+
+{
+  "name": "Nome da Rota",
+  "source": {
+    "lat": 123.456,
+    "lng": 789.012
+  },
+  "destination": {
+    "lat": 456.789,
+    "lng": 987.654
+  }
+}
+
+
+### Criar uma rota
+GET http://localhost:8080/api/routes

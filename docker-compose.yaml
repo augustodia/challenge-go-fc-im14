@@ -1,0 +1,51 @@
+#version: '3'
+#
+#services:
+#  mysql:
+#    image: mysql:8
+#    container_name: mysql
+#    restart: always
+#    environment:
+#      MYSQL_DATABASE: routes
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_USER: test
+#      MYSQL_PASSWORD: testpassword
+#    ports:
+#      - 3306:3306
+#    volumes:
+#      - ./mysql:/var/lib/mysql
+#      - ./dump:/docker-entrypoint-initdb.d
+
+version: '3.1'
+
+services:
+  mysql:
+    image: mysql
+    restart: always
+    container_name: db-mysql
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: routes
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpassword
+    volumes:
+      - ./dump/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+
+  api:
+    build:
+      context: .
+    volumes:
+      - .:/app
+    command: 'bash ./entrypoint-go.sh'
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
