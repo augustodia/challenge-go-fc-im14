@@ -1,30 +1,12 @@
-#version: '3'
-#
-#services:
-#  mysql:
-#    image: mysql:8
-#    container_name: mysql
-#    restart: always
-#    environment:
-#      MYSQL_DATABASE: routes
-#      MYSQL_ROOT_PASSWORD: root
-#      MYSQL_USER: test
-#      MYSQL_PASSWORD: testpassword
-#    ports:
-#      - 3306:3306
-#    volumes:
-#      - ./mysql:/var/lib/mysql
-#      - ./dump:/docker-entrypoint-initdb.d
-
-version: '3.1'
+version: '3'
 
 services:
   mysql:
-    image: mysql
+    image: mysql:8.0.30-debian
     restart: always
-    container_name: db-mysql
+    container_name: mysql
     ports:
-      - 3307:3306
+      - 3306:3306
     environment:
       MYSQL_DATABASE: routes
       MYSQL_ROOT_PASSWORD: root
